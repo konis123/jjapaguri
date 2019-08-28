@@ -8,11 +8,11 @@ var remoteStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
 
-var pcConfig = {
+var pcConfig = null;/*{
     'iceServers': [
         {url:'stun:stun.l.google.com:19302'},
         {urls: "turn:numb.viagenie.ca", credential:"muazkh",username:"webrtc@live.com"}
-    ]};
+    ]};*/
 
 var sdpConstraints = {
     offerToReceivaAudio: true,
