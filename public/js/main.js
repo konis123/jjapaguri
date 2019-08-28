@@ -185,8 +185,10 @@ function signalingMessageCallback(message) {
                                   logError);
 
   } else if (message.type === 'candidate') {
-    peerConn.addIceCandidate(new RTCIceCandidate({
-      candidate: message.candidate
+    peerConn.addIceCandidate(new RTCIceCandidate({ 
+      candidate: message.candidate, 
+      sdpMid:message.id, 
+      sdpMLineIndex: message.label, 
     }));
 
   }
