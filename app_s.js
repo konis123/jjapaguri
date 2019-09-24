@@ -12,7 +12,7 @@ app.use(express.static('public'))
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
-let roomID;
+var roomID;
 app.get('/:roomId', function(req, res){
   roomID = req.params.roomId;
   res.sendFile(__dirname + '/room.html');
@@ -79,30 +79,30 @@ io.sockets.on('connection', function(socket) {
   ///////////////////////////////////////
 
   var room_info = [];//'foo';
-  console.log("servereee");
+  
   socket.on('message', function(message) {
     console.log('Client said: ', message);
     // for a real app, would be room-only (not broadcast)
     socket.broadcast.emit('message', message);
   });
 
-  // socket.on('request', (room) => {
-  //   socket.broadcast.emit("getRequest", room);
-  //   room_info = room;
-  // });
+  socket.on('request', (room) => {
+    socket.broadcast.emit("getRequest", room);
+    room_info = room;
+  });
 
-  // socket.on('response', (room, isGrant) => {
-  //     if(isGrant){
-  //         socket.broadcast.emit("getResponse", room, isGrant);
-  //         socket.emit("enter", room);
-  //     }else{
-  //       console.log('방에 들어가는거 거절.');
-  //     }
-  // });
+  socket.on('response', (room, isGrant) => {
+      if(isGrant){
+          socket.broadcast.emit("getResponse", room, isGrant);
+          socket.emit("enter", room);
+      }else{
+        console.log('방에 들어가는거 거절.');
+      }
+  });
 
   socket.on("onCollabo", (id) => {
-      socket.emit("collabo", roomID);
-      room_info.push(roomID);
+      socket.emit("collabo", room_info);
+      room_info.push(room_info);
   });
 
   socket.on("enter", (room, id) => {
@@ -111,7 +111,6 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on("connect", () => {
-      console.log("connection")
       socket.emit("onCollabo", socket.id);
   });
 
@@ -121,7 +120,7 @@ io.sockets.on('connection', function(socket) {
       var clientsInRoom = io.sockets.adapter.rooms[room];
       var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0;
       console.log("Room "+room + "now has "+ numClients + " client(s)");
-      //console.log();
+
       if(numClients === 0){
           socket.join(room);
           console.log("client id: "+socket.id+" created room " + room);
