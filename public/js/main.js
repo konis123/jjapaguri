@@ -8,11 +8,11 @@ var remoteStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
 
-var pcConfig = null;/*{
+var pcConfig = {
     'iceServers': [
         {url:'stun:stun.l.google.com:19302'},
         {urls: "turn:numb.viagenie.ca", credential:"muazkh",username:"webrtc@live.com"}
-    ]};*/
+    ]};
 
 var sdpConstraints = {
     offerToReceivaAudio: true,
@@ -93,6 +93,7 @@ socket.on('message', (message) => {
     }
 });
 
+//로컬스트림 가져옴
 navigator.mediaDevices.getUserMedia({audio:false, video:true})
     .then(goStream).catch((e) => {
         alert("getUserMedia() error."+ e.name);

@@ -78,8 +78,8 @@ io.sockets.on('connection', function(socket) {
   */
   ///////////////////////////////////////
 
-  var room_info = roomID;//'foo';
-
+  var room_info = [];//'foo';
+  
   socket.on('message', function(message) {
     console.log('Client said: ', message);
     // for a real app, would be room-only (not broadcast)
@@ -102,6 +102,7 @@ io.sockets.on('connection', function(socket) {
 
   socket.on("onCollabo", (id) => {
       socket.emit("collabo", room_info);
+      room_info.push(room_info);
   });
 
   socket.on("enter", (room, id) => {
