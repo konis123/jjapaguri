@@ -12,8 +12,9 @@ app.use(express.static('public'))
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
-
-app.get('/room/:roomId', function(req, res){
+var roomID;
+app.get('/:roomId', function(req, res){
+  roomID = req.params.roomId;
   res.sendFile(__dirname + '/room.html');
 });
 
@@ -77,7 +78,7 @@ io.sockets.on('connection', function(socket) {
   */
   ///////////////////////////////////////
 
-  var room_info = 'foo';
+  var room_info = roomID;//'foo';
 
   socket.on('message', function(message) {
     console.log('Client said: ', message);
