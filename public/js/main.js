@@ -134,7 +134,8 @@ function maybeStart(){
 }
 
 window.onbeforeunload = function(){
-    sendMessage('bye');
+    //sendMessage('bye');
+    socket.emit('bye', 'byebye');
 };
 
 function createPeerConnection(){

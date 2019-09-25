@@ -24,62 +24,17 @@ http.listen(process.env.PORT||3000, function(){
 
 var io = require('socket.io')(http);
 io.sockets.on('connection', function(socket) {
-  /*
-  // convenience function to log server messages on the client
-  function log() {
-    var array = ['Message from server:'];
-    array.push.apply(array, arguments);
-    socket.emit('log', array);
-  }
-
-  socket.on('message', function(message) {
-    log('Client said: ', message);
-    // for a real app, would be room-only (not broadcast)
-    socket.broadcast.emit('message', message);
-  });
-
-  socket.on('create or join', function(room) {
-    log('Received request to create or join room ' + room);
-
-    var clientsInRoom = io.sockets.adapter.rooms[room];
-    var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0;
-    log('Room ' + room + ' now has ' + numClients + ' client(s)');
-
-    if (numClients === 0) {
-      socket.join(room);
-      log('Client ID ' + socket.id + ' created room ' + room);
-      socket.emit('created', room, socket.id);
-
-    } else if (numClients === 1) {
-      log('Client ID ' + socket.id + ' joined room ' + room);
-      io.sockets.in(room).emit('join', room);
-      socket.join(room);
-      socket.emit('joined', room, socket.id);
-      io.sockets.in(room).emit('ready');
-    } else { // max two clients
-      socket.emit('full', room);
-    }
-  });
-
-  socket.on('ipaddr', function() {
-    var ifaces = os.networkInterfaces();
-    for (var dev in ifaces) {
-      ifaces[dev].forEach(function(details) {
-        if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
-          socket.emit('ipaddr', details.address);
-        }
-      });
-    }
-  });
-
+  
   socket.on('bye', function(){
     console.log('received bye');
   });
-  */
-  ///////////////////////////////////////
+
+  socket.on('disconnect', () => {
+    console.log('disconnected');
+  });
 
   var room_info = [];//'foo';
-  console.log("servereee");
+
   socket.on('message', function(message) {
     console.log('Client said: ', message);
     // for a real app, would be room-only (not broadcast)
@@ -104,7 +59,7 @@ io.sockets.on('connection', function(socket) {
       socket.emit("collabo", roomID);
       room_info.push(roomID);
   });
-
+/*
   socket.on("enter", (room, id) => {
       socket.emit("collabo", room);
       console.log("enter: " + room);
@@ -114,13 +69,13 @@ io.sockets.on('connection', function(socket) {
       console.log("connection")
       socket.emit("onCollabo", socket.id);
   });
-
+*/
   socket.on("create or join", (room) => {
       console.log("received request to create or join room " + room);
 
       var clientsInRoom = io.sockets.adapter.rooms[room];
       var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0;
-      console.log("Room "+room + "now has "+ numClients + " client(s)");
+      console.log("Room "+room + " now has "+ numClients + " client(s)");
       //console.log();
       if(numClients === 0){
           socket.join(room);
