@@ -23,6 +23,8 @@ http.listen(process.env.PORT||3000, function(){
   console.log('listening on *:3000');
 });
 
+let room_info = new Object();
+
 var io = require('socket.io')(http);
 io.sockets.on('connection', function(socket) {
   
@@ -36,7 +38,6 @@ io.sockets.on('connection', function(socket) {
     room_info[socket.id] = null;
   });
 
-  let room_info = new Object();//{socket_id:new Array, room_id:new Array};//'foo';
 
   socket.on('message', function(message) {
     console.log('Client said: ', message);
@@ -61,8 +62,6 @@ io.sockets.on('connection', function(socket) {
   socket.on("onCollabo", (id) => {
       room_info[id] = roomID;
       socket.emit("collabo", room_info[id]);
-      //room_info.socket_id.push(id);
-      //room_info.room_id.push(roomID);
       console.log('---room_info list ' + id + ', ' + room_info[id]);
   });
 /*
