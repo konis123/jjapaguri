@@ -59,8 +59,8 @@ io.sockets.on('connection', function(socket) {
   // });
 
   socket.on("onCollabo", (id) => {
-      socket.emit("collabo", roomID);
       room_info[id] = roomID;
+      socket.emit("collabo", room_info[id]);
       //room_info.socket_id.push(id);
       //room_info.room_id.push(roomID);
       console.log('---room_info list ' + id + ', ' + room_info[id]);
