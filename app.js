@@ -36,7 +36,7 @@ io.sockets.on('connection', function(socket) {
     room_info[socket.id] = null;
   });
 
-  var room_info = new Object();//{socket_id:new Array, room_id:new Array};//'foo';
+  let room_info = new Object();//{socket_id:new Array, room_id:new Array};//'foo';
 
   socket.on('message', function(message) {
     console.log('Client said: ', message);
