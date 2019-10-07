@@ -12,6 +12,7 @@ app.use(express.static('public'))
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
+
 let roomID;
 app.get('/:roomId', function(req, res){
   roomID = req.params.roomId;
@@ -30,10 +31,12 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('disconnect', () => {
-    console.log('disconnected');
+    console.log('disconnected '+socket.id);
+    io.sockets.in(room_info[socket.id]).emit("disconnect", 'diconnect');
+    room_info[socket.id] = null;
   });
 
-  var room_info = [];//'foo';
+  var room_info = new Object();//{socket_id:new Array, room_id:new Array};//'foo';
 
   socket.on('message', function(message) {
     console.log('Client said: ', message);
@@ -57,7 +60,10 @@ io.sockets.on('connection', function(socket) {
 
   socket.on("onCollabo", (id) => {
       socket.emit("collabo", roomID);
-      room_info.push(roomID);
+      room_info[id] = roomID;
+      //room_info.socket_id.push(id);
+      //room_info.room_id.push(roomID);
+      console.log('---room_info list ' + id + ', ' + room_info[id]);
   });
 /*
   socket.on("enter", (room, id) => {

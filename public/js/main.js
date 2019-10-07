@@ -15,7 +15,7 @@ var pcConfig = {
     ]};
 
 var sdpConstraints = {
-    offerToReceivaAudio: true,
+    offerToReceivaAudio: false,
     offerToReceiveVideo: true
 };
 
@@ -63,6 +63,12 @@ socket.on('joined', (room) => {
     console.log("joined: "+room);
     isChannelReady = true;
 });
+
+socket.on('disconnect', () => {
+    console.log('counterpart disconnected');
+    isChannelReady = false;
+    isStarted = false;
+  });
 
 socket.on('log', (array) => {
     console.log.apply(console, array);
