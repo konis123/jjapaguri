@@ -16,6 +16,7 @@ app.get('/', function(req, res){
 let roomID;
 app.get('/:roomId', function(req, res){
   roomID = req.params.roomId;
+  console.log("roomID 나오나? "+roomID);
   res.sendFile(__dirname + '/room.html');
 });
 
