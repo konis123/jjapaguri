@@ -14,8 +14,13 @@ app.get('/', function(req, res){
 });
 
 let roomID;
-app.get('/room/:roomId', function(req, res){
-  roomID = req.params.roomId;
+// app.get('/room/:roomId', function(req, res){
+//   roomID = req.params.roomId;
+//   console.log("roomID 나오나? "+roomID);
+//   res.sendFile(__dirname + '/room.html');
+// });
+app.get('/room/', function(req, res){
+  roomID = req.query.roomid;
   console.log("roomID 나오나? "+roomID);
   res.sendFile(__dirname + '/room.html');
 });

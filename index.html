@@ -13,26 +13,29 @@
 
   <h1>Realtime communication with WebRTC</h1>
 
-  <div id="room-id-input-div">
-      <input type="text" id="room-id-input" autofocus="">
-  </div>
-  <div id="room-id-input-buttons">
-    <button id="join-button">JOIN</button>
-    <button id="random-button">RANDOM</button>
-  </div>
+  <form action = "/room" method = "get"> 
+    <div id="room-id-input-div">
+        <input type="text" id="room-id-input" name="roomid" autofocus="">
+    </div>
+    <div id="room-id-input-buttons">
+      <button type="submit" id="join-button">JOIN</button>
+      <button type="submit" id="random-button">RANDOM</button>
+    </div>
+  </form>
 
+<!--
   <div id="videos">
     <video id="localVideo" autoplay width="640px" height="480px" playsinline="true"></video>
     <video id="remoteVideo" autoplay width="640px" height="480px" playsinline="true"></video>    
   </div>
-
+-->
   <div id="buttons">
     <button id="snap">Snap</button><span> then </span><button id="send">Send</button>
     <span> or </span>
     <button id="snapAndSend">Snap &amp; Send</button>
   </div>
 
-  <div id="incoming">
+    <div id="incoming">
     <h2>Incoming photos</h2>
     <div id="trail"></div>
   </div>
@@ -42,7 +45,9 @@
   <!-- This file is automatically added/served when running "node index.js". -->
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<!--
   <script src="js/main.js"></script>
+-->  
 
 </body>
 
