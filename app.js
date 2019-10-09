@@ -97,8 +97,8 @@ io.sockets.on('connection', function(socket) {
           io.sockets.in(room).emit("join", room);
           socket.join(room);
           socket.emit("joined", room, socket.id);
-          io.sockets.in(room).emit("ready", room);
-          socket.broadcast.emit("ready", room);            
+          //io.sockets.in(room).emit("ready", room);
+          //socket.broadcast.emit("ready", room);            
       }else{
           socket.emit('full', room);
       }

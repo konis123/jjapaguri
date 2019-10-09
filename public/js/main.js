@@ -42,10 +42,10 @@ socket.on('collabo', (room) => {
     console.log("Attempted to create or join room", room);
 });
 
-socket.on('ready', function() {
-    console.log('Socket is ready');
-    createPeerConnection();
-});
+// socket.on('ready', function() {
+//     console.log('Socket is ready');
+//     createPeerConnection();
+// });
 
 socket.on('created', (room) => {
     console.log("Created room " + room);
