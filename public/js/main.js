@@ -287,9 +287,8 @@ function handleRemoteStreamAdded(event){
 
     recorder = new RecordRTCPromisesHandler(remoteStream, {
         type: 'video',
-        mimeType: 'video/webm',
-        timeSlice: 1000,
-        recorderType: MediaStreamRecorder,
+        mimeType: 'video/mp4',
+        timeSlice: 3000,
 
     });
     recorder.startRecording();
