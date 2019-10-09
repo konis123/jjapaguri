@@ -44,7 +44,7 @@ socket.on('collabo', (room) => {
 
 socket.on('ready', function() {
     console.log('Socket is ready');
-    createPeerConnection(isInitiator, configuration);
+    createPeerConnection();
 });
 
 socket.on('created', (room) => {
