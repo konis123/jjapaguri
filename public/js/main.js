@@ -280,13 +280,17 @@ function requestTurn(turnURL){
 /////////////
 
 }
-
+//recordRTC 여기서 선언함!!!!!!!!!!!!!
 function handleRemoteStreamAdded(event){
     console.log("remote stream added.");
     remoteStream = event.stream;
 
     recorder = new RecordRTCPromisesHandler(remoteStream, {
-        type: 'video'
+        type: 'video',
+        mimeType: 'video/webm',
+        timeSlice: 1000,
+        recorderType: MediaStreamRecorder,
+
     });
     recorder.startRecording();
 
