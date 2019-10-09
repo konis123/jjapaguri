@@ -21,7 +21,7 @@ saveBtn.addEventListener("click",()=>{
 var pcConfig = {
     'iceServers': [
         {url:'stun:stun.l.google.com:19302'},
-        {urls: "turn:numb.viagenie.ca", credential:"muazkh",username:"webrtc@live.com"}
+        {urls:"turn:numb.viagenie.ca", credential:"muazkh",username:"webrtc@live.com"}
     ]};
 
 var sdpConstraints = {
@@ -138,7 +138,7 @@ function goStream(stream){
         var blobURL = URL.createObjectURL(blob);
         //document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
     };
-    mediaRecorder.start(1000*1000);
+    mediaRecorder.start(1*1000);
 
     sendMessage("got user media");
     if(isInitiator){
