@@ -8,6 +8,16 @@ var remoteStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
 
+let mediaRecorder;
+var saveBtn = document.getElementById('save');
+saveBtn.addEventListener("click",()=>{
+    console.log('save');
+    //mediaRecorder.stop();
+    mediaRecorder.save();
+
+})
+
+
 var pcConfig = {
     'iceServers': [
         {url:'stun:stun.l.google.com:19302'},
@@ -105,7 +115,13 @@ socket.on('message', (message) => {
 });
 
 //로컬스트림 가져옴
-navigator.mediaDevices.getUserMedia({audio:false, video:true})
+
+//-----------recording 위해서.
+var mediaConstraints = {
+    //audio: true,
+    video: true
+};
+navigator.mediaDevices.getUserMedia(mediaConstraints)
     .then(goStream).catch((e) => {
         alert("getUserMedia() error."+ e.name);
     });
@@ -114,11 +130,43 @@ function goStream(stream){
     console.log("adding local stream.");
     localStream = stream;
     localVideo.srcObject = stream;
+
+    mediaRecorder = new MediaStreamRecorder(stream);
+    mediaRecorder.mimeType = 'video/webm';
+    mediaRecorder.ondataavailable = function (blob) {
+        // POST/PUT "Blob" using FormData/XHR2
+        var blobURL = URL.createObjectURL(blob);
+        //document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+    };
+    mediaRecorder.start(1000*1000);
+
     sendMessage("got user media");
     if(isInitiator){
         maybeStart();
     }
 }
+
+function onMediaError(e) {
+    console.error('media error', e);
+}
+//-----------------------
+    
+
+
+// navigator.mediaDevices.getUserMedia({audio:false, video:true})
+//     .then(goStream).catch((e) => {
+//         alert("getUserMedia() error."+ e.name);
+//     });
+
+// function goStream(stream){
+//     console.log("adding local stream.");
+//     localStream = stream;
+//     localVideo.srcObject = stream;
+//     sendMessage("got user media");
+//     if(isInitiator){
+//         maybeStart();
+//     }
+// }
 
 var constraints = {
     video: true

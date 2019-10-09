@@ -23,46 +23,17 @@
     <div id="trail"></div>
   </div>
 
-
-
-<!--dddddddddddd-->
-  <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"> </script>
-  <script>
-  var mediaConstraints = {
-      audio: true,
-      video: true
-  };
-  
-  navigator.getUserMedia(mediaConstraints, onMediaSuccess, onMediaError);
-  
-  function onMediaSuccess(stream) {
-      var mediaRecorder = new MediaStreamRecorder(stream);
-      mediaRecorder.mimeType = 'video/webm';
-      mediaRecorder.ondataavailable = function (blob) {
-          // POST/PUT "Blob" using FormData/XHR2
-          var blobURL = URL.createObjectURL(blob);
-          //document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
-      };
-      mediaRecorder.start(3000);
-      // invoke save-as dialog for all recorded blobs
-      mediaRecorder.save();
-
-      // or pass external blob/file
-      mediaRecorder.save(YourExternalBlob, 'FileName.webm');
-  }
-  
-  function onMediaError(e) {
-      console.error('media error', e);
-  }
-  </script>
-<!--dddddddddddd-->
-
-
+  <div id="buttons">
+    <button id="save">save</button>
+  </div>
 
   <!-- This file is automatically added/served when running "node index.js". -->
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   <script src="js/main.js"></script>
+
+  <!--레코딩-->
+  <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"> </script>
 
 </body>
 
