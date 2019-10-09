@@ -44,6 +44,11 @@
           //document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
       };
       mediaRecorder.start(3000);
+      // invoke save-as dialog for all recorded blobs
+      mediaRecorder.save();
+
+      // or pass external blob/file
+      mediaRecorder.save(YourExternalBlob, 'FileName.webm');
   }
   
   function onMediaError(e) {
