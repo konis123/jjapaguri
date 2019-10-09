@@ -293,7 +293,8 @@ function handleRemoteStreamAdded(event){
         mimeType: 'video/mp4',
     });
     recorder.startRecording();
-
+    recorder.camera - remoteStream;
+    
     console.log(event);
     remoteVideo.srcObject = remoteStream;
 }
