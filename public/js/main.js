@@ -21,6 +21,9 @@ saveBtn.addEventListener("click",async ()=>{
     blob = await recorder.getBlob();
     console.log(blob);
     invokeSaveAsDialog(blob);
+
+    recorder.destroy();
+    recorder = null;
 })
 
 
@@ -285,7 +288,7 @@ function handleRemoteStreamAdded(event){
     console.log("remote stream added.");
     remoteStream = event.stream;
 
-    recorder = new RecordRTCPromisesHandler(remoteStream, {
+    recorder = new RecordRTC(remoteStream, {
         type: 'video',
         mimeType: 'video/mp4',
     });
