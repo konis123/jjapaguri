@@ -23,6 +23,9 @@
     <div id="trail"></div>
   </div>
 
+
+
+<!--dddddddddddd-->
   <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"> </script>
   <script>
   var mediaConstraints = {
@@ -38,7 +41,7 @@
       mediaRecorder.ondataavailable = function (blob) {
           // POST/PUT "Blob" using FormData/XHR2
           var blobURL = URL.createObjectURL(blob);
-          document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+          //document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
       };
       mediaRecorder.start(3000);
   }
@@ -47,6 +50,9 @@
       console.error('media error', e);
   }
   </script>
+<!--dddddddddddd-->
+
+
 
   <!-- This file is automatically added/served when running "node index.js". -->
   <script src="/socket.io/socket.io.js"></script>
