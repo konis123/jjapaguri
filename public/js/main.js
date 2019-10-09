@@ -8,13 +8,19 @@ var remoteStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
 
-let mediaRecorder;
-var saveBtn = document.getElementById('save');
-saveBtn.addEventListener("click",()=>{
-    console.log('save');
-    //mediaRecorder.stop();
-    mediaRecorder.save();
+//let mediaRecorder;//mediastreamRecorder 사용시
+let recorder;//recordRTC 사용시
+let blob;//recordRTC 사용시
 
+var saveBtn = document.getElementById('save');
+saveBtn.addEventListener("click",async ()=>{
+    console.log('save click');
+    //mediaRecorder.save();
+
+    await recorder.stopRecording();
+    blob = await recorder.getBlob();
+    console.log(blob);
+    invokeSaveAsDialog(blob);
 })
 
 
@@ -114,9 +120,28 @@ socket.on('message', (message) => {
     }
 });
 
-//로컬스트림 가져옴
+//RecordRTC 사용
+var mediaConstraints = {
+    //audio: true,
+    video: true
+};
+navigator.mediaDevices.getUserMedia(mediaConstraints)
+    .then(goStream).catch((e) => {
+        alert("getUserMedia() error."+ e.name);
+    });
 
-//-----------recording 위해서.
+function goStream(stream){
+    console.log("adding local stream.");
+    localStream = stream;
+    localVideo.srcObject = stream;
+
+    sendMessage("got user media");
+    if(isInitiator){
+        maybeStart();
+    }
+}
+//-----------mediaStreamrecorder.js 사용했을때.
+/*
 var mediaConstraints = {
     //audio: true,
     video: true
@@ -149,10 +174,11 @@ function goStream(stream){
 function onMediaError(e) {
     console.error('media error', e);
 }
+*/
 //-----------------------
     
 
-
+//로컬스트림 가져옴
 // navigator.mediaDevices.getUserMedia({audio:false, video:true})
 //     .then(goStream).catch((e) => {
 //         alert("getUserMedia() error."+ e.name);
@@ -258,6 +284,12 @@ function requestTurn(turnURL){
 function handleRemoteStreamAdded(event){
     console.log("remote stream added.");
     remoteStream = event.stream;
+
+    recorder = new RecordRTCPromisesHandler(remoteStream, {
+        type: 'video'
+    });
+    recorder.startRecording();
+
     console.log(event);
     remoteVideo.srcObject = remoteStream;
 }
