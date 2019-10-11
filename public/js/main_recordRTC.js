@@ -8,86 +8,38 @@ var remoteStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
 
-const mediaSource = new MediaSource();
-mediaSource.addEventListener('sourceopen', handleSourceOpen, false);
-let mediaRecorder;
-let recordedBlobs;
-let sourceBuffer;
-
+//let mediaRecorder;//mediastreamRecorder 사용시
+let recorder;//recordRTC 사용시
+let blob;//recordRTC 사용시
 
 var saveBtn = document.getElementById('start');
 saveBtn.addEventListener("click",async ()=>{
     console.log('start click');
-    recordedBlobs = [];
+    //mediaRecorder.save();
+
     let options = {mimeType: 'video/webm;codecs=vp9'};
-    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-      console.error(`${options.mimeType} is not Supported`);
-      errorMsgElement.innerHTML = `${options.mimeType} is not Supported`;
-      options = {mimeType: 'video/webm;codecs=vp8'};
-      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-        console.error(`${options.mimeType} is not Supported`);
-        errorMsgElement.innerHTML = `${options.mimeType} is not Supported`;
-        options = {mimeType: 'video/webm'};
-        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-          console.error(`${options.mimeType} is not Supported`);
-          errorMsgElement.innerHTML = `${options.mimeType} is not Supported`;
-          options = {mimeType: ''};
-        }
-      }
-    }
-  
-    try {
-      mediaRecorder = await new MediaRecorder(remoteStream, options);
-    } catch (e) {
-      console.error('Exception while creating MediaRecorder:', e);
-      errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(e)}`;
-      return;
-    }
-  
-    console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
+    var mediaRecorder = new MediaRecorder(remoteStream, options);
 
-    mediaRecorder.onstop = (event) => {
-      console.log('Recorder stopped: ', event);
-    };
-    mediaRecorder.ondataavailable = handleDataAvailable;
-    mediaRecorder.start(10); // collect 10ms of data
-    console.log('MediaRecorder started', mediaRecorder);
-
+    recorder = new RecordRTC(remoteStream, {
+        type: 'video',
+        mimeType: 'video/webm',
+    });
+    await recorder.startRecording();
+    recorder.camera = await remoteStream;
 })
 
 var endBtn = document.getElementById('end');
 endBtn.addEventListener("click",async ()=>{
     console.log('end click');
 
-    await mediaRecorder.stop();
-    console.log('Recorded Blobs: ', recordedBlobs);
-
-    const blob = new Blob(recordedBlobs, {type: 'video/webm'});
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    a.download = 'test.webm';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }, 100);
-
+    await recorder.stopRecording();
+    blob = await recorder.getBlob();
+    console.log(blob);
+    invokeSaveAsDialog(blob);
+    recorder.destroy();
+    recorder = null;
 })
 
-function handleSourceOpen(event) {
-    console.log('MediaSource opened');
-    sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
-    console.log('Source buffer: ', sourceBuffer);
-}
-  
-function handleDataAvailable(event) {
-    if (event.data && event.data.size > 0) {
-        recordedBlobs.push(event.data);
-    }
-}
 
 var pcConfig = {
     'iceServers': [
