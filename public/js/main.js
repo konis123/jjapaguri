@@ -13,7 +13,7 @@ let recorder;//recordRTC 사용시
 let blob;//recordRTC 사용시
 
 var saveBtn = document.getElementById('start');
-saveBtn.addEventListener("startClick",async ()=>{
+saveBtn.addEventListener("click",async ()=>{
     console.log('start click');
     //mediaRecorder.save();
 
@@ -26,7 +26,7 @@ saveBtn.addEventListener("startClick",async ()=>{
 })
 
 var endBtn = document.getElementById('end');
-endBtn.addEventListener("endClick",async ()=>{
+endBtn.addEventListener("click",async ()=>{
     console.log('end click');
 
     await recorder.stopRecording();
