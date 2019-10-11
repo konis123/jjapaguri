@@ -12,16 +12,27 @@ var remoteVideo = document.getElementById('remoteVideo');
 let recorder;//recordRTC 사용시
 let blob;//recordRTC 사용시
 
-var saveBtn = document.getElementById('save');
-saveBtn.addEventListener("click",async ()=>{
-    console.log('save click');
+var saveBtn = document.getElementById('start');
+saveBtn.addEventListener("startClick",()=>{
+    console.log('start click');
     //mediaRecorder.save();
+
+    recorder = new RecordRTC(remoteStream, {
+        type: 'video',
+        mimeType: 'video/mp4',
+    });
+    recorder.startRecording();
+    recorder.camera = remoteStream;
+})
+
+var endBtn = document.getElementById('end');
+endBtn.addEventListener("endClick",async ()=>{
+    console.log('end click');
 
     await recorder.stopRecording();
     blob = await recorder.getBlob();
     console.log(blob);
     invokeSaveAsDialog(blob);
-
     recorder.destroy();
     recorder = null;
 })
@@ -288,13 +299,6 @@ function handleRemoteStreamAdded(event){
     console.log("remote stream added.");
     remoteStream = event.stream;
 
-    recorder = new RecordRTC(remoteStream, {
-        type: 'video',
-        mimeType: 'video/mp4',
-    });
-    recorder.startRecording();
-    recorder.camera - remoteStream;
-    
     console.log(event);
     remoteVideo.srcObject = remoteStream;
 }
