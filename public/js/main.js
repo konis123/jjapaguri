@@ -1,9 +1,9 @@
 var isChannelReady = false;
 var isInitiator = false;
 var isStarted = false;
-var localStream;
-var pc;
-//let remoteStream;
+let localStream;
+let pc;
+let remoteStream;
 
 let localVideo = document.getElementById('localVideo');
 let remoteVideo = document.getElementById('remoteVideo');
@@ -296,7 +296,7 @@ function requestTurn(turnURL){
 //recordRTC 여기서 선언함!!!!!!!!!!!!!
 function handleRemoteStreamAdded(event){
     console.log("remote stream added.");
-    var remoteStream = event.stream;
+    remoteStream = event.stream;
 
     recorder = RecordRTC(remoteStream, {
         type: 'video'
