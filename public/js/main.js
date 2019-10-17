@@ -17,7 +17,7 @@ saveBtn.addEventListener("click", async ()=>{
     console.log('start click');
     //mediaRecorder.save();
 
-    if(recorder !== undefined){
+    if(remoteStream !== undefined){
         var streamFromVideoTag = remoteVideo.captureStream(15); // 15 is frame-rates
         recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
         recorder.startRecording();
