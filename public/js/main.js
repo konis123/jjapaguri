@@ -13,14 +13,17 @@ let recorder;//recordRTC 사용시
 //let blob;//recordRTC 사용시
 
 var saveBtn = document.getElementById('start');
-saveBtn.addEventListener("click", ()=>{
+saveBtn.addEventListener("click", async ()=>{
     console.log('start click');
     //mediaRecorder.save();
 
-    var streamFromVideoTag = remoteVideo.captureStream(15); // 15 is frame-rates
-    recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
-    recorder.startRecording();
-
+    if(recorder !== undefined){
+        var streamFromVideoTag = remoteVideo.captureStream(15); // 15 is frame-rates
+        recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
+        recorder.startRecording();
+    }else{
+        console.log('recorder undefined')
+    }
     // recorder = new RecordRTCPromisesHandler(remoteStream, {
     //     type: 'video'
     // });
@@ -41,7 +44,7 @@ saveBtn.addEventListener("click", ()=>{
 })
 
 var endBtn = document.getElementById('end');
-endBtn.addEventListener("click", ()=>{
+endBtn.addEventListener("click", async ()=>{
     console.log('end click');
 
     // const sleep = m => new Promise(r => setTimeout(r, m));
