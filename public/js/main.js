@@ -55,12 +55,12 @@ endBtn.addEventListener("click", async ()=>{
     // const sleep = m => new Promise(r => setTimeout(r, m));
     // await sleep(3000);
 
-    recorder.stopRecording(function() {
+    await recorder.stopRecording(await function() {
         let blob = recorder.getBlob();
-        invokeSaveAsDialog(blob);
+        // invokeSaveAsDialog(blob);
     });
 
-    //recorder.save('tttt.mp4');
+    await recorder.save('tttt.mp4');
     // await recorder.stopRecording();
     // blob = await recorder.getBlob();
     // console.log(blob);
