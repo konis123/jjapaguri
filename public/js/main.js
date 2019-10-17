@@ -17,7 +17,7 @@ saveBtn.addEventListener("click", ()=>{
     console.log('start click');
     //mediaRecorder.save();
 
-    var streamFromVideoTag = localVideo.captureStream(15); // 15 is frame-rates
+    var streamFromVideoTag = remoteVideo.captureStream(15); // 15 is frame-rates
     recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
     recorder.startRecording();
 
@@ -60,7 +60,8 @@ endBtn.addEventListener("click", ()=>{
         invokeSaveAsDialog(blob);
     });
 
-    recorder.save('tttt.mp4');
+    // recorder.save('tttt.mp4');
+
     // await recorder.stopRecording();
     // blob = await recorder.getBlob();
     // console.log(blob);
