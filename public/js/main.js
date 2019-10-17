@@ -13,7 +13,7 @@ let recorder;//recordRTC 사용시
 //let blob;//recordRTC 사용시
 
 var saveBtn = document.getElementById('start');
-saveBtn.addEventListener("click",async ()=>{
+saveBtn.addEventListener("click", ()=>{
     console.log('start click');
     //mediaRecorder.save();
 
@@ -41,7 +41,7 @@ saveBtn.addEventListener("click",async ()=>{
 })
 
 var endBtn = document.getElementById('end');
-endBtn.addEventListener("click", async ()=>{
+endBtn.addEventListener("click", ()=>{
     console.log('end click');
 
     // const sleep = m => new Promise(r => setTimeout(r, m));
@@ -55,7 +55,7 @@ endBtn.addEventListener("click", async ()=>{
     // const sleep = m => new Promise(r => setTimeout(r, m));
     // await sleep(3000);
 
-    await recorder.stopRecording(await function() {
+    recorder.stopRecording(function() {
         let blob = recorder.getBlob();
         invokeSaveAsDialog(blob);
     });
