@@ -21,10 +21,10 @@ saveBtn.addEventListener("click",async ()=>{
     // recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
     // recorder.startRecording();
 
-    // recorder = new RecordRTCPromisesHandler(remoteStream, {
-    //     type: 'video'
-    // });
-    //recorder.startRecording();
+    recorder = new RecordRTCPromisesHandler(remoteStream, {
+        type: 'video'
+    });
+    recorder.startRecording();
 
     // const sleep = m => new Promise(r => setTimeout(r, m));
     // await sleep(3000);
@@ -298,10 +298,10 @@ function handleRemoteStreamAdded(event){
     console.log("remote stream added.");
     remoteStream = event.stream;
 
-    recorder = RecordRTC(remoteStream, {
-        type: 'video'
-    });
-    recorder.startRecording();
+    // recorder = RecordRTC(remoteStream, {
+    //     type: 'video'
+    // });
+    // recorder.startRecording();
 
     console.log(event);
     remoteVideo.srcObject = remoteStream;
