@@ -57,7 +57,7 @@ endBtn.addEventListener("click", ()=>{
 
     recorder.stopRecording(function() {
         let blob = recorder.getBlob();
-        invokeSaveAsDialog(blob);
+        invokeSaveAsDialog(blob,'test.mp4');
     });
 
     // recorder.save('tttt.mp4');
