@@ -17,14 +17,14 @@ saveBtn.addEventListener("click", ()=>{
     console.log('start click');
     //mediaRecorder.save();
 
-    // var streamFromVideoTag = localVideo.captureStream(15); // 15 is frame-rates
-    // recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
-    // recorder.startRecording();
-
-    recorder = new RecordRTCPromisesHandler(remoteStream, {
-        type: 'video'
-    });
+    var streamFromVideoTag = localVideo.captureStream(15); // 15 is frame-rates
+    recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
     recorder.startRecording();
+
+    // recorder = new RecordRTCPromisesHandler(remoteStream, {
+    //     type: 'video'
+    // });
+    // recorder.startRecording();
 
     // const sleep = m => new Promise(r => setTimeout(r, m));
     // await sleep(3000);
