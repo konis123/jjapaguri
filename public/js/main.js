@@ -8,82 +8,38 @@ let remoteStream;
 let localVideo = document.getElementById('localVideo');
 let remoteVideo = document.getElementById('remoteVideo');
 
-//let mediaRecorder;//mediastreamRecorder 사용시
 let recorder;//recordRTC 사용시
-//let blob;//recordRTC 사용시
 
 var saveBtn = document.getElementById('start');
 saveBtn.addEventListener("click", async ()=>{
     console.log('start click');
     //mediaRecorder.save();
 
-    if(remoteStream !== undefined){
-        var streamFromVideoTag = remoteVideo.captureStream(15); // 15 is frame-rates
-        recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
-        recorder.startRecording();
-    }else{
-        console.log('recorder undefined')
-    }
-    // recorder = new RecordRTCPromisesHandler(remoteStream, {
-    //     type: 'video'
-    // });
-    // recorder.startRecording();
+    // if(remoteStream !== undefined){
+    //     var streamFromVideoTag = remoteVideo.captureStream(15); // 15 is frame-rates
+    //     recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
+    //     recorder.startRecording();
+    // }else{
+    //     console.log('recorder undefined')
+    // }
 
-    // const sleep = m => new Promise(r => setTimeout(r, m));
-    // await sleep(3000);
-
-    // let options = {mimeType: 'video/webm;codecs=vp9'};
-    // var mediaRecorder = new MediaRecorder(remoteStream, options);
-
-    // recorder = new RecordRTC(remoteStream, {
-    //     type: 'video',
-    //     mimeType: 'video/webm',
-    // });
-    // await recorder.startRecording();
-    // recorder.camera = await remoteStream;
+    recorder = new RecordRTC(remoteStream, {
+        type: 'video',
+        mimeType: 'video/webm',
+    });
+    await recorder.startRecording();
+    recorder.camera = await remoteStream;
+    
 })
 
 var endBtn = document.getElementById('end');
 endBtn.addEventListener("click", async ()=>{
     console.log('end click');
-
-    // const sleep = m => new Promise(r => setTimeout(r, m));
-    // await sleep(3000);
-
-    // await recorder.stopRecording(function() {
-    //     blob = recorder.getBlob();
-    //     //invokeSaveAsDialog(blob);
-    // });
-
-    // const sleep = m => new Promise(r => setTimeout(r, m));
-    // await sleep(3000);
-
+    
     recorder.stopRecording(function() {
         let blob = recorder.getBlob();
         invokeSaveAsDialog(blob,'test.mp4');
     });
-
-    // recorder.save('tttt.mp4');
-
-    // await recorder.stopRecording();
-    // blob = await recorder.getBlob();
-    // console.log(blob);
-    // await invokeSaveAsDialog(blob);
-    // await recorder.destroy();
-    // recorder = null;
-
-    //const blob = new Blob(recordedBlobs, {type: 'video/webm'});
-    // const url = URL.createObjectURL(blob);
-    // const a = document.createElement('a');
-    // a.style = 'display: none';
-    // a.href = url;
-    // a.download = 'test.webm';
-    // document.body.appendChild(a);
-    // a.click();
-    // setTimeout(() => {
-    //   document.body.removeChild(a);
-    //   window.URL.revokeObjectURL(url);
-    // }, 100);
 
 
 });
