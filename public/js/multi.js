@@ -12,8 +12,8 @@ connection.sdpConstraints.mandatory = {
     offerToReceiveVideo: true
 };
 
-var localVideosContainer = document.getElementById('local-video-container')
-var remoteVideosContainer = document.getElementById('remote-video-container')
+var localVideosContainer = document.getElementById('local-videos-container')
+var remoteVideosContainer = document.getElementById('remote-videos-container')
 connection.onstream = function(event){
     var video = event.mediaElement;
 
