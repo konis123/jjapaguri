@@ -18,11 +18,11 @@ connection.onstream = function(event){
     var video = event.mediaElement;
 
     if(event.type === 'local'){
-        localVideosContainer.appendChild(video)
+        //localVideosContainer.appendChild(video)
     }
 
     if(event.type === 'remote'){
-        //remoteVideosContainer.appendChild(video)
+        remoteVideosContainer.appendChild(video)
     }
 
 };
