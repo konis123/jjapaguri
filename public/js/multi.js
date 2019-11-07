@@ -12,6 +12,13 @@ connection.sdpConstraints.mandatory = {
     offerToReceiveVideo: true
 };
 
+var videoContainer = document.getElementById('video-container')
+connection.onstream = function(event){
+    var video = event.mediaElement;
+
+    videoContainer.appendChild(video);
+};
+
 let roomid = document.getElementById('txt-roomid');
 
 roomid.value = connection.token();
