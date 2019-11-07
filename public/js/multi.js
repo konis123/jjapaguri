@@ -12,11 +12,19 @@ connection.sdpConstraints.mandatory = {
     offerToReceiveVideo: true
 };
 
-var videoContainer = document.getElementById('video-container')
+var localVideosContainer = document.getElementById('local-video-container')
+var remoteVideosContainer = document.getElementById('remote-video-container')
 connection.onstream = function(event){
     var video = event.mediaElement;
 
-    videoContainer.appendChild(video);
+    if(event.type === 'local'){
+        localVideosContainer.appendChild('video')
+    }
+
+    if(event.type === 'remote'){
+        remoteVideosContainer.appendChild('video')
+    }
+
 };
 
 let roomid = document.getElementById('txt-roomid');
