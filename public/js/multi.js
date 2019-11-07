@@ -22,7 +22,7 @@ connection.onstream = function(event){
     }
 
     if(event.type === 'remote'){
-        remoteVideosContainer.appendChild(video)
+        //remoteVideosContainer.appendChild(video)
     }
 
 };
