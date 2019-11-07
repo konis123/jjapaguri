@@ -18,7 +18,7 @@ connection.onstream = function(event){
     var video = event.mediaElement;
 
     if(event.type === 'local'){
-        //localVideosContainer.appendChild(video)
+        localVideosContainer.appendChild(video)
     }
 
     if(event.type === 'remote'){
@@ -33,7 +33,6 @@ roomid.value = connection.token();
 
 document.getElementById('btn-open-or-join-room').onclick = function(){
     this.disabled = true;
-    console.log('aaa')
-    connection.openOrJoin(roomid.value || 'predefined-roomid')
+    connection.openOrJoin(roomid.value || 'predefiend-roomid')
 };
 
