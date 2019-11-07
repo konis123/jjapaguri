@@ -32,8 +32,12 @@ http.listen(process.env.PORT||3000, function(){
 let room_info = new Object();
 
 var io = require('socket.io')(http);
-io.sockets.on('connection', function(socket) {
+const RTCMultiConnectionServer = require('rtcmulticonnection-server');
+io.on('connection', function(socket) {
   
+  RTCMultiConnectionServer.addSocket(socket);
+
+
   socket.on('bye', function(){
     console.log('received bye');
   });

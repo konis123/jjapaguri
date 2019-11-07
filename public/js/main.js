@@ -68,7 +68,7 @@ remoteVideo.addEventListener("resize", () => {
     console.log(`Remote video size changed to ${remoteVideo.videoWidth}x${remoteVideo.videoHeight}`);
 });
 
-var socket = io.connect();
+var socket = io();
 
 socket.on('connect', () => {
     socket.emit("onCollabo", socket.id);
@@ -289,5 +289,3 @@ function stop(){
     pc.close();
     pc = null;
 }
-
-

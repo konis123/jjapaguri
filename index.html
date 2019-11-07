@@ -41,13 +41,21 @@
   </div>
 
 
+  <input id='txt-roomid' placeholder="Unique Room ID">
+  <button id='btn-open-or-join-room'>open or join room</button>
+
+
 
   <!-- This file is automatically added/served when running "node index.js". -->
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-<!--
-  <script src="js/main.js"></script>
--->  
+  <!--<script src="/socket.io/socket.io.js"></script>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>-->
+
+
+
+  <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+  <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
+  <script src="js/multi.js"></script>
+
 
 </body>
 
