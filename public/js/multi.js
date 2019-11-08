@@ -1,5 +1,5 @@
 let connection = new RTCMultiConnection();
-// var request = require('request');
+var request = require('request');
 
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';//'localhost:3000'
 
