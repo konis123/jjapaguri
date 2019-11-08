@@ -37,14 +37,17 @@ let flag = false;
 
 document.getElementById('btn-open-or-join-room').onclick = async function(){
 
-    const options = {
-        uri:'http://google.com', 
-        method: 'POST',
-        form: {
-          id: roomid.value,
-        }
-    }
-    const flag = await request(options)
+    // const options = {
+    //     uri:'http://ec2-15-164-224-142.ap-northeast-2.compute.amazonaws.com:8000/room/test', 
+    //     method: 'POST',
+    //     form: {
+    //       id: roomid.value,
+    //     }
+    // }
+    const response = await request('http://ec2-15-164-224-142.ap-northeast-2.compute.amazonaws.com:8000/room/test', function (error, response, body) {
+        //callback
+    });
+    flag = response.result;
 
     this.disabled = true;
     connection.openOrJoin(roomid.value || 'predefiend-roomid')
