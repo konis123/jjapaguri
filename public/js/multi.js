@@ -1,5 +1,5 @@
 let connection = new RTCMultiConnection();
-import request from 'request';//var request = require('request');
+//var request = require('request');
 
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';//'localhost:3000'
 
@@ -50,10 +50,11 @@ document.getElementById('btn-open-or-join-room').onclick = async function(){
     // });
     // flag = response.result;
 
-    $.get("http://ec2-15-164-224-142.ap-northeast-2.compute.amazonaws.com:8000/room/"+roomid.value, function(data, status){
+    const response = $.get("http://ec2-15-164-224-142.ap-northeast-2.compute.amazonaws.com:8000/room/"+roomid.value, function(data, status){
         alert("Data: " + data + "\nStatus: " + status);
       });
-
+    flag = response.result;
+    
     this.disabled = true;
     connection.openOrJoin(roomid.value || 'predefiend-roomid')
 };
