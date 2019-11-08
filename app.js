@@ -15,7 +15,7 @@ app.get('/', function(req, res){
 
 let roomID;
 //이건 방관리하는거임. 흠.....처음엔 false 그 후엔 true만 반환.
-ROOM = [];
+var ROOM = [];
 app.get('/room/:roomId', function(req, res){
   roomID = req.params.roomId;
   console.log("roomID 나오나? "+roomID);
