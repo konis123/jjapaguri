@@ -44,10 +44,15 @@ document.getElementById('btn-open-or-join-room').onclick = async function(){
     //       id: roomid.value,
     //     }
     // }
-    const response = await request('http://ec2-15-164-224-142.ap-northeast-2.compute.amazonaws.com:8000/room/test', function (error, response, body) {
-        //callback
-    });
-    flag = response.result;
+
+    // const response = await request('http://ec2-15-164-224-142.ap-northeast-2.compute.amazonaws.com:8000/room/'+roomid.value, function (error, response, body) {
+    //     //callback
+    // });
+    // flag = response.result;
+
+    $.get("http://ec2-15-164-224-142.ap-northeast-2.compute.amazonaws.com:8000/room/"+roomid.value, function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+      });
 
     this.disabled = true;
     connection.openOrJoin(roomid.value || 'predefiend-roomid')
