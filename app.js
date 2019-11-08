@@ -14,16 +14,25 @@ app.get('/', function(req, res){
 });
 
 let roomID;
-// app.get('/room/:roomId', function(req, res){
-//   roomID = req.params.roomId;
-//   console.log("roomID 나오나? "+roomID);
-//   res.sendFile(__dirname + '/room.html');
-// });
+//이건 방관리하는거임. 흠.....처음엔 false 그 후엔 true만 반환.
+ROOM = [];
+app.get('/room/:roomId', function(req, res){
+  roomID = req.params.roomId;
+  console.log("roomID 나오나? "+roomID);
+  if(ROOM[roomID] != undefined){
+    res.send(false)
+  }else{
+    res.send(true)
+  }
+
+});
+
 app.get('/room/', function(req, res){
   roomID = req.query.roomid;
   console.log("roomID 나오나? "+roomID);
   res.sendFile(__dirname + '/room.html');
 });
+
 
 http.listen(process.env.PORT||3000, function(){
   console.log('listening on *:3000');

@@ -51,7 +51,6 @@ document.getElementById('btn-open-or-join-room').onclick = async function(){
     // flag = response.result;
 
     $.get("http://ec2-15-164-224-142.ap-northeast-2.compute.amazonaws.com:8000/room/"+roomid.value, function(data){
-        console.log(data+'aaaaaa')
         flag = response.result;
         console.log(flag)
       });
