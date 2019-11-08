@@ -19,7 +19,7 @@ let ROOM = [];
 app.get('/room/:roomId', function(req, res){
   roomID = req.params.roomId;
   console.log("roomID 나오나? "+ROOM[roomID]);
-  if(ROOM[roomID] != undefined){
+  if(ROOM[roomID] == undefined){
     res.send(false)
   }else{
     res.send(true)
