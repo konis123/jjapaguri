@@ -25,7 +25,7 @@ connection.onstream = function(event){
     if(event.type === 'remote' && !flag){
         flag = false;
         remoteVideosContainer.appendChild(video)
-        console.log(video.getElementById)
+        console.log(video.id+'---------------')
     }
 
 };
