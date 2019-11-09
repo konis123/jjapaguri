@@ -77,23 +77,45 @@ saveBtn.addEventListener("click", async ()=>{
     //     console.log('recorder undefined')
     // }
 
-    recorder = new RecordRTC(videoTag, {
-        type: 'video',
-        mimeType: 'video/webm',
-    });
-    await recorder.startRecording();
-    recorder.camera = await remoteStream;
+    // recorder = new RecordRTC(videoTag, {
+    //     type: 'video',
+    //     mimeType: 'video/webm',
+    // });
+    // await recorder.startRecording();
+    // recorder.camera = await remoteStream;
     
+    if(remoteStream !== undefined){
+        var streamFromVideoTag = videoTag.captureStream(15); // 15 is frame-rates
+        recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
+        recorder.startRecording();
+    }else{
+        console.log('recorder undefined')
+    }
+
+
 })
 
 var endBtn = document.getElementById('end');
 endBtn.addEventListener("click", async ()=>{
     console.log('end click');
     
-    recorder.stopRecording(function() {
-        let blob = recorder.getBlob();
-        invokeSaveAsDialog(blob,'test.mp4');
-    });
+    // recorder.stopRecording(function() {
+    //     let blob = recorder.getBlob();
+    //     invokeSaveAsDialog(blob,'test.mp4');
+    // });
 
+
+    const blob = new Blob(recordedBlobs, {type: 'video/webm'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style = 'display: none';
+    a.href = url;
+    a.download = 'test.webm';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 100);
 
 });
