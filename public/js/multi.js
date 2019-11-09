@@ -16,9 +16,10 @@ connection.sdpConstraints.mandatory = {
 var localVideosContainer = document.getElementById('local-videos-container')
 var remoteVideosContainer = document.getElementById('remote-videos-container')
 let videoTag;
+let stream;
 connection.onstream = function(event){
     videoTag = event.mediaElement;
-
+    stream = event.stream;
     if(event.type === 'local' && flag){
         localVideosContainer.appendChild(videoTag)
     }
@@ -84,7 +85,7 @@ saveBtn.addEventListener("click", async ()=>{
     // await recorder.startRecording();
     // recorder.camera = await remoteStream;
     
-    if(remoteStream !== undefined){
+    if(stream !== undefined){
         var streamFromVideoTag = videoTag.captureStream(15); // 15 is frame-rates
         recorder = RecordRTC(streamFromVideoTag, {type: 'video'});
         recorder.startRecording();
