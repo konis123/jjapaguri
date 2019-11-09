@@ -112,4 +112,37 @@ endBtn.addEventListener("click", async ()=>{
     //   window.URL.revokeObjectURL(url);
     // }, 100);
 
+    // get recorded blob
+    var blob = recorder.getBlob();
+    // generating a random file name
+    var fileName = 'test.mp4';
+    console.log(1);
+    // we need to upload "File" --- not "Blob"
+    var fileObject = new File([blob], fileName, {
+        type: 'video/mp4'
+    });
+    console.log(2);
+    var formData = new FormData();
+    // recorded data
+    await formData.append('video-blob', fileObject);
+    // file name
+    await formData.append('video-filename', fileObject.name);
+    
+    var upload_url = 'http://ec2-15-164-228-137.ap-northeast-2.compute.amazonaws.com/efspoint/videos/';
+    
+    console.log(3);
+    // upload using jQuery
+    $.ajax({
+        url: upload_url, // replace with your own server URL
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        crossOrigin: true,
+        type: 'POST',
+        success: function(response) {
+            alert('업로드 성공!'); // error/failure
+        }
+    });
+
 });
