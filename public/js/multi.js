@@ -1,15 +1,14 @@
 let connection = new RTCMultiConnection();
-//var request = require('request');
 
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';//'localhost:3000'
 
 connection.session = {
-    audio: true,
+    audio: false,
     video: true
 };
 
 connection.sdpConstraints.mandatory = {
-    offerToReceivaAudio: true,
+    offerToReceivaAudio: false,
     offerToReceiveVideo: true
 };
 
@@ -89,19 +88,21 @@ saveBtn.addEventListener("click", async ()=>{
 
 })
 
+uploadNum = 1;
 var end_A_Btn = document.getElementById('end_A');
 end_A_Btn.addEventListener("click", async ()=>{
     console.log('end_A click');
     
     recorder.stopRecording(function() {
         let blob = recorder.getBlob();
-        invokeSaveAsDialog(blob,'A1.mp4');
+
+        var fileName = roomid.value+'_A_'+uploadNum+'.mp4';
+        uploadNum++;
+        
+        // invokeSaveAsDialog(blob, fileName);
 
         // get recorded blob
 
-        // generating a random file name
-        var fileName = 'A.mp4';
-        console.log(1);
         // we need to upload "File" --- not "Blob"
         var fileObject = new File([blob], fileName, {
             type: 'video/mp4'
@@ -178,7 +179,64 @@ end_B_Btn.addEventListener("click", async ()=>{
     
     recorder.stopRecording(function() {
         let blob = recorder.getBlob();
-        invokeSaveAsDialog(blob,'B1.mp4');
+
+        var fileName = roomid.value+'_B_'+uploadNum+'.mp4';
+        uploadNum++;
+        
+        // invokeSaveAsDialog(blob, fileName);
+
+        // get recorded blob
+
+        // we need to upload "File" --- not "Blob"
+        var fileObject = new File([blob], fileName, {
+            type: 'video/mp4'
+        });
+
+        var albumBucketName = "playstyle";
+        var bucketRegion = "ap-northeast-2";
+        var IdentityPoolId = "ap-northeast-2:e52b3ad7-a28f-4204-8a60-3fa1b2cea79b";
+
+        AWS.config.update({
+            region: bucketRegion,
+            credentials: new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: IdentityPoolId
+            })
+        });
+
+        // var s3 = new AWS.S3({
+        //     apiVersion: "2006-03-01",
+        //     params: { Bucket: albumBucketName }
+        // });
+
+        // 
+        var file = fileObject;
+        var fileName = file.name;
+        // var albumPhotosKey = encodeURIComponent(albumName) + "/";
+        // 예시 videos/test0.mp4
+        var photoKey = "videos/" + fileName; 
+
+        // Use S3 ManagedUpload class as it supports multipart uploads
+        var upload = new AWS.S3.ManagedUpload({
+            params: {
+                Bucket: albumBucketName,
+                Key: photoKey,
+                Body: file,
+                ACL: "public-read"
+            }
+        });
+
+        var promise = upload.promise();
+
+        promise.then(
+            function (data) {
+                alert("Successfully uploaded photo.");
+            },
+            function (err) {
+                return alert("There was an error uploading your photo: ", err.message);
+            }
+        );
+
+        
     });
 
 
