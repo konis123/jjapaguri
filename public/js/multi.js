@@ -96,6 +96,62 @@ end_A_Btn.addEventListener("click", async ()=>{
     recorder.stopRecording(function() {
         let blob = recorder.getBlob();
         invokeSaveAsDialog(blob,'A1.mp4');
+
+
+        // get recorded blob
+
+        // generating a random file name
+        var fileName = 'A.mp4';
+        console.log(1);
+        // we need to upload "File" --- not "Blob"
+        var fileObject = new File([blob], fileName, {
+            type: 'video/mp4'
+        });
+
+        var albumBucketName = "playstyle";
+        var bucketRegion = "ap-northeast-2";
+        var IdentityPoolId = "ap-northeast-2:e52b3ad7-a28f-4204-8a60-3fa1b2cea79b";
+
+        AWS.config.update({
+            region: bucketRegion,
+            credentials: new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: IdentityPoolId
+            })
+        });
+
+        // var s3 = new AWS.S3({
+        //     apiVersion: "2006-03-01",
+        //     params: { Bucket: albumBucketName }
+        // });
+
+        // 
+        var file = fileObject;
+        var fileName = file.name;
+        // var albumPhotosKey = encodeURIComponent(albumName) + "/";
+        // 예시 videos/test0.mp4
+        var photoKey = "videos/" + fileName; 
+
+        // Use S3 ManagedUpload class as it supports multipart uploads
+        var upload = new AWS.S3.ManagedUpload({
+            params: {
+                Bucket: albumBucketName,
+                Key: photoKey,
+                Body: file,
+                ACL: "public-read"
+            }
+        });
+
+        var promise = upload.promise();
+
+        promise.then(
+            function (data) {
+                alert("Successfully uploaded photo.");
+            },
+            function (err) {
+                return alert("There was an error uploading your photo: ", err.message);
+            }
+        );
+        
     });
 
 
@@ -112,60 +168,7 @@ end_A_Btn.addEventListener("click", async ()=>{
     //   window.URL.revokeObjectURL(url);
     // }, 100);
 
-    // get recorded blob
-    var blob = recorder.getBlob();
-    // generating a random file name
-    var fileName = 'A.mp4';
-    console.log(1);
-    // we need to upload "File" --- not "Blob"
-    var fileObject = new File([blob], fileName, {
-        type: 'video/mp4'
-    });
-
-    var albumBucketName = "playstyle";
-    var bucketRegion = "ap-northeast-2";
-    var IdentityPoolId = "ap-northeast-2:e52b3ad7-a28f-4204-8a60-3fa1b2cea79b";
-
-    AWS.config.update({
-        region: bucketRegion,
-        credentials: new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: IdentityPoolId
-        })
-    });
-
-    // var s3 = new AWS.S3({
-    //     apiVersion: "2006-03-01",
-    //     params: { Bucket: albumBucketName }
-    // });
-
-    // 
-    var file = fileObject;
-    var fileName = file.name;
-    // var albumPhotosKey = encodeURIComponent(albumName) + "/";
-    // 예시 videos/test0.mp4
-    var photoKey = "videos/" + fileName; 
-
-    // Use S3 ManagedUpload class as it supports multipart uploads
-    var upload = new AWS.S3.ManagedUpload({
-        params: {
-            Bucket: albumBucketName,
-            Key: photoKey,
-            Body: file,
-            ACL: "public-read"
-        }
-    });
-
-    var promise = upload.promise();
-
-    promise.then(
-        function (data) {
-            alert("Successfully uploaded photo.");
-            viewAlbum(albumName);
-        },
-        function (err) {
-            return alert("There was an error uploading your photo: ", err.message);
-        }
-    );
+    
 
 });
 
