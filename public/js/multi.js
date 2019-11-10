@@ -97,7 +97,6 @@ end_A_Btn.addEventListener("click", async ()=>{
         let blob = recorder.getBlob();
         invokeSaveAsDialog(blob,'A1.mp4');
 
-
         // get recorded blob
 
         // generating a random file name
@@ -151,7 +150,7 @@ end_A_Btn.addEventListener("click", async ()=>{
                 return alert("There was an error uploading your photo: ", err.message);
             }
         );
-        
+
     });
 
 
