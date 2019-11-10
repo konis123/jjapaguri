@@ -89,13 +89,13 @@ saveBtn.addEventListener("click", async ()=>{
 
 })
 
-var endBtn = document.getElementById('end');
-endBtn.addEventListener("click", async ()=>{
-    console.log('end click');
+var end_A_Btn = document.getElementById('end_A');
+end_A_Btn.addEventListener("click", async ()=>{
+    console.log('end_A click');
     
     recorder.stopRecording(function() {
         let blob = recorder.getBlob();
-        invokeSaveAsDialog(blob,'test.mp4');
+        invokeSaveAsDialog(blob,'A1.mp4');
     });
 
 
@@ -115,7 +115,66 @@ endBtn.addEventListener("click", async ()=>{
     // get recorded blob
     var blob = recorder.getBlob();
     // generating a random file name
-    var fileName = 'test.mp4';
+    var fileName = 'A.mp4';
+    console.log(1);
+    // we need to upload "File" --- not "Blob"
+    var fileObject = new File([blob], fileName, {
+        type: 'video/mp4'
+    });
+    console.log(2);
+    var formData = new FormData();
+    // recorded data
+    await formData.append('video-blob', fileObject);
+    // file name
+    await formData.append('video-filename', fileObject.name);
+    
+    var upload_url = 'http://ec2-15-164-228-137.ap-northeast-2.compute.amazonaws.com/efspoint/videos/';
+    
+    console.log(3);
+    // upload using jQuery
+    $.ajax({
+        url: upload_url, // replace with your own server URL
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        crossOrigin: true,
+        type: 'POST',
+        success: function(response) {
+            alert('업로드 성공!'); // error/failure
+        }
+    });
+
+});
+
+//B승
+var end_B_Btn = document.getElementById('end_B');
+end_B_Btn.addEventListener("click", async ()=>{
+    console.log('end_B click');
+    
+    recorder.stopRecording(function() {
+        let blob = recorder.getBlob();
+        invokeSaveAsDialog(blob,'B1.mp4');
+    });
+
+
+    // const blob = new Blob(recordedBlobs, {type: 'video/webm'});
+    // const url = URL.createObjectURL(blob);
+    // const a = document.createElement('a');
+    // a.style = 'display: none';
+    // a.href = url;
+    // a.download = 'test.webm';
+    // document.body.appendChild(a);
+    // a.click();
+    // setTimeout(() => {
+    //   document.body.removeChild(a);
+    //   window.URL.revokeObjectURL(url);
+    // }, 100);
+
+    // get recorded blob
+    var blob = recorder.getBlob();
+    // generating a random file name
+    var fileName = 'B.mp4';
     console.log(1);
     // we need to upload "File" --- not "Blob"
     var fileObject = new File([blob], fileName, {
