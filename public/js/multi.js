@@ -141,9 +141,9 @@ end_A_Btn.addEventListener("click", async ()=>{
     // 
     var file = fileObject;
     var fileName = file.name;
-    var albumPhotosKey = encodeURIComponent(albumName) + "/";
+    // var albumPhotosKey = encodeURIComponent(albumName) + "/";
     // 예시 videos/test0.mp4
-    var photoKey = albumPhotosKey + fileName; 
+    var photoKey = "videos/" + fileName; 
 
     // Use S3 ManagedUpload class as it supports multipart uploads
     var upload = new AWS.S3.ManagedUpload({
