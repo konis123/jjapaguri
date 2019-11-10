@@ -121,29 +121,51 @@ end_A_Btn.addEventListener("click", async ()=>{
     var fileObject = new File([blob], fileName, {
         type: 'video/mp4'
     });
-    console.log(2);
-    var formData = new FormData();
-    // recorded data
-    await formData.append('video-blob', fileObject);
-    // file name
-    await formData.append('video-filename', fileObject.name);
-    
-    var upload_url = 'http://ec2-15-164-228-137.ap-northeast-2.compute.amazonaws.com/efspoint/videos/';
-    
-    console.log(3);
-    // upload using jQuery
-    $.ajax({
-        url: upload_url, // replace with your own server URL
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        crossOrigin: true,
-        type: 'POST',
-        success: function(response) {
-            alert('업로드 성공!'); // error/failure
+
+    var albumBucketName = "playstyle";
+    var bucketRegion = "ap-northeast-2";
+    var IdentityPoolId = "ap-northeast-2:e52b3ad7-a28f-4204-8a60-3fa1b2cea79b";
+
+    AWS.config.update({
+        region: bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: IdentityPoolId
+        })
+    });
+
+    // var s3 = new AWS.S3({
+    //     apiVersion: "2006-03-01",
+    //     params: { Bucket: albumBucketName }
+    // });
+
+    // 
+    var file = fileObject[0];
+    var fileName = file.name;
+    var albumPhotosKey = encodeURIComponent(albumName) + "/";
+    // 예시 videos/test0.mp4
+    var photoKey = albumPhotosKey + fileName; 
+
+    // Use S3 ManagedUpload class as it supports multipart uploads
+    var upload = new AWS.S3.ManagedUpload({
+        params: {
+            Bucket: albumBucketName,
+            Key: photoKey,
+            Body: file,
+            ACL: "public-read"
         }
     });
+
+    var promise = upload.promise();
+
+    promise.then(
+        function (data) {
+            alert("Successfully uploaded photo.");
+            viewAlbum(albumName);
+        },
+        function (err) {
+            return alert("There was an error uploading your photo: ", err.message);
+        }
+    );
 
 });
 
