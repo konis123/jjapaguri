@@ -96,7 +96,7 @@ end_A_Btn.addEventListener("click", async ()=>{
     recorder.stopRecording(function() {
         let blob = recorder.getBlob();
 
-        var fileName = roomid.value+'_A_'+uploadNum+'.mp4';
+        var fileName = roomid.value+'_A_'+uploadNum+'.mkv';
         uploadNum++;
         
         // invokeSaveAsDialog(blob, fileName);
@@ -105,7 +105,7 @@ end_A_Btn.addEventListener("click", async ()=>{
 
         // we need to upload "File" --- not "Blob"
         var fileObject = new File([blob], fileName, {
-            type: 'video/mp4'
+            type: 'video/mkv'
         });
 
         var albumBucketName = "playstyle";
@@ -180,7 +180,7 @@ end_B_Btn.addEventListener("click", async ()=>{
     recorder.stopRecording(function() {
         let blob = recorder.getBlob();
 
-        var fileName = roomid.value+'_B_'+uploadNum+'.mp4';
+        var fileName = roomid.value+'_B_'+uploadNum+'.mkv';
         uploadNum++;
         
         // invokeSaveAsDialog(blob, fileName);
@@ -189,7 +189,7 @@ end_B_Btn.addEventListener("click", async ()=>{
 
         // we need to upload "File" --- not "Blob"
         var fileObject = new File([blob], fileName, {
-            type: 'video/mp4'
+            type: 'video/mkv'
         });
 
         var albumBucketName = "playstyle";
@@ -256,11 +256,11 @@ end_B_Btn.addEventListener("click", async ()=>{
     // get recorded blob
     var blob = recorder.getBlob();
     // generating a random file name
-    var fileName = 'B.mp4';
+    var fileName = 'B.mkv';
     console.log(1);
     // we need to upload "File" --- not "Blob"
     var fileObject = new File([blob], fileName, {
-        type: 'video/mp4'
+        type: 'video/mkv'
     });
     console.log(2);
     var formData = new FormData();
