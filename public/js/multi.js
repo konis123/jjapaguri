@@ -139,7 +139,7 @@ end_A_Btn.addEventListener("click", async ()=>{
     // });
 
     // 
-    var file = fileObject[0];
+    var file = fileObject;
     var fileName = file.name;
     var albumPhotosKey = encodeURIComponent(albumName) + "/";
     // 예시 videos/test0.mp4
