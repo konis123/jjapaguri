@@ -4,7 +4,9 @@ connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';//'localh
 
 connection.session = {
     // audio: false,
-    video: true
+    video: true,
+    Audio: false,
+    audio: false
 };
 
 connection.sdpConstraints.mandatory = {
