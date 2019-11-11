@@ -58,7 +58,7 @@ app.post('/score/reset/', function(req, res){
 //Get Score
 app.get('/score/', function(req, res){
   console.log(A+" : "+B+" score get!");
-  score = {'A':A, 'B':B};
+  let score = {'A':A, 'B':B};
   res.send(score);
 });
 
