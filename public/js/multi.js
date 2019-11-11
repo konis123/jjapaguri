@@ -283,7 +283,7 @@ end_B_Btn.addEventListener("click", async ()=>{
 
 
 setInterval(function(){
-    $.get("https://jjapaguri.herokuapp.com/score/"+roomid.value, function(data){
+    $.get("https://jjapaguri.herokuapp.com/score/", function(data){
         // flag = response.result;
         score = data
         console.log(score)
