@@ -281,14 +281,32 @@ end_B_Btn.addEventListener("click", async ()=>{
 });
 
 
+var add_A_Btn = document.getElementById('add_A');
+end_A_Btn.addEventListener("click", async ()=>{
+    $.post("https://jjapaguri.herokuapp.com/score/A/", function(data){
+        console.log('A 득점!!')
+      });
+});
+
+var add_B_Btn = document.getElementById('add_B');
+end_B_Btn.addEventListener("click", async ()=>{
+    $.post("https://jjapaguri.herokuapp.com/score/B/", function(data){
+        console.log('B 득점!!')
+      });
+});
+
+var reset_Btn = document.getElementById('reset');
+reset_Btn.addEventListener("click", async ()=>{
+    $.post("https://jjapaguri.herokuapp.com/score/reset/", function(data){
+        console.log('점수 Reset!!')
+      });
+});
+
 
 setInterval(function(){
     $.get("https://jjapaguri.herokuapp.com/score/", function(data){
         // flag = response.result;
         score = data
         console.log(score)
-
-        
-
       });
 }, 2000);
