@@ -5,13 +5,16 @@ connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';//'localh
 connection.session = {
     // audio: false,
     video: true,
-    Audio: false,
-    audio: false
 };
 
 connection.sdpConstraints.mandatory = {
     // offerToReceivaAudio: false,
     offerToReceiveVideo: true
+};
+
+connection.mediaConstraints = {
+    audio: false,
+    video: true
 };
 
 var localVideosContainer = document.getElementById('local-videos-container')
