@@ -34,6 +34,33 @@ app.get('/room/', function(req, res){
   res.sendFile(__dirname + '/room.html');
 });
 
+let A = 0;
+let B = 0;
+//A 득점
+app.post('/score/A/', function(req, res){
+  console.log("A 득점");
+  A++;
+});
+
+//B 득점
+app.post('/score/B/', function(req, res){
+  console.log("B 득점");
+  B++;
+});
+
+//Reset
+app.post('/score/reset/', function(req, res){
+  console.log("Score Reset");
+  A = 0;
+  B = 0;
+});
+
+//Get Score
+app.get('/score/', function(req, res){
+  console.log(A+" : "+B+" score get!");
+  score = {'A':A, 'B':B};
+  res.send(score);
+});
 
 http.listen(process.env.PORT||3000, function(){
   console.log('listening on *:3000');

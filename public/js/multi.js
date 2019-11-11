@@ -279,3 +279,16 @@ end_B_Btn.addEventListener("click", async ()=>{
     });
 
 });
+
+
+
+setInterval(function(){
+    $.get("https://jjapaguri.herokuapp.com/score/"+roomid.value, function(data){
+        // flag = response.result;
+        score = data
+        console.log(score)
+
+        
+
+      });
+}, 2000);
